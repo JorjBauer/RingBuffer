@@ -1,0 +1,9 @@
+RingBuffer	KEYWORD1
+clear	KEYWORD2
+isFull	KEYWORD2
+hasData	KEYWORD2
+addByte	KEYWORD2
+consumeByte	KEYWORD2
+peek	KEYWORD2
+count	KEYWORD2
+
