@@ -13,6 +13,7 @@ class RingBuffer {
   bool isFull();
   bool hasData();
   bool addByte(byte b);
+  bool addBytes(byte *b, int count);
   byte consumeByte();
   byte peek(int idx);
   int count();

@@ -39,6 +39,15 @@ bool RingBuffer::addByte(byte b)
   return true;
 }
 
+bool RingBuffer::addBytes(byte *b, int count)
+{
+  for (int i=0; i<count; i++) {
+    if (!addByte(b[i]))
+      return false;
+  }
+  return true;
+}
+
 byte RingBuffer::consumeByte()
 {
   if (this->fill == 0)
