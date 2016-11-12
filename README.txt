@@ -42,6 +42,12 @@ attempts to add one byte to the buffer. If the buffer is full, the
 byte is not added and this method returns false; it returns true if
 the byte is successfully added to the ring buffer.
 
+  bool addBytes(byte *b, int count);
+
+attempts to add 'count' bytes to the buffer. If the buffer fills, 
+processing stops and this method returns false. It returns true 
+only if all of the bytes are successfully added to the ring buffer.
+
   byte consumeByte();
 
 returns one byte at the head of the buffer, and removes it from the
