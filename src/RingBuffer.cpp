@@ -62,7 +62,7 @@ byte RingBuffer::consumeByte()
 
 byte RingBuffer::peek(int idx)
 {
-  byte p = (this->ptr + idx) % this->max;
+  int p = (this->ptr + idx) % this->max;
   return this->buffer[p];
 }
 
