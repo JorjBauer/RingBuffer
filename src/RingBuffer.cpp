@@ -1,11 +1,13 @@
-#include <RingBuffer.h>
+#include "RingBuffer.h"
+#include <stdlib.h>
 
-RingBuffer::RingBuffer(int length)
+RingBuffer::RingBuffer(int16_t length)
 {
-  this->buffer = (byte *)malloc(length);
+  this->buffer = (uint8_t *)malloc(length);
   this->max = length;
   this->fill = 0;
   this->ptr = 0;
+  this->cursor = 0;
 }
 
 RingBuffer::~RingBuffer()
@@ -28,7 +30,7 @@ bool RingBuffer::hasData()
   return (this->fill != 0);
 }
 
-bool RingBuffer::addByte(byte b)
+bool RingBuffer::addByte(uint8_t b)
 {
   if (this->max == this->fill)
     return false;
@@ -39,7 +41,21 @@ bool RingBuffer::addByte(byte b)
   return true;
 }
 
-bool RingBuffer::addBytes(byte *b, int count)
+bool RingBuffer::replaceByte(uint8_t b)
+{
+  if (cursor < fill) {
+    buffer[cursor] = b;
+    cursor++;
+    if (cursor >= fill) {
+      cursor = 0;
+    }
+    return true;
+  }
+  return false;
+}
+
+
+bool RingBuffer::addBytes(uint8_t *b, int count)
 {
   for (int i=0; i<count; i++) {
     if (!addByte(b[i]))
@@ -48,25 +64,50 @@ bool RingBuffer::addBytes(byte *b, int count)
   return true;
 }
 
-byte RingBuffer::consumeByte()
+uint8_t RingBuffer::consumeByte()
 {
   if (this->fill == 0)
     return 0;
   
-  byte ret = this->buffer[this->ptr];
+  uint8_t ret = this->buffer[this->ptr];
   this->fill--;
   this->ptr++;
   this->ptr %= this->max;
   return ret;
 }
 
-byte RingBuffer::peek(int idx)
+uint8_t RingBuffer::peek(int16_t idx)
 {
-  int p = (this->ptr + idx) % this->max;
+  uint16_t p = (this->ptr + idx) % this->max;
   return this->buffer[p];
 }
 
-int RingBuffer::count()
+int16_t RingBuffer::count()
 {
   return this->fill;
+}
+
+uint16_t RingBuffer::Cursor()
+{
+  return this->cursor;
+}
+
+void RingBuffer::setPeekCursor(int16_t idx)
+{
+  this->cursor = idx;
+}
+
+void RingBuffer::resetPeekCursor()
+{
+  this->cursor = 0;
+}
+
+uint8_t RingBuffer::peekNext()
+{
+  uint8_t ret = peek(cursor);
+  cursor++;
+  if (cursor >= fill) {
+    cursor = 0;
+  }
+  return ret;
 }
