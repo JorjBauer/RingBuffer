@@ -1,7 +1,7 @@
 This is a very simplistic, small, C++ Ring Buffer class.
 
-It only understands bytes. You tell it what size FIFO you want, in
-bytes on construction, like this 16-byte ring buffer:
+It only understands bytes (uint8_t). You tell it what size FIFO you
+want, in bytes on construction, like this 16-byte ring buffer:
 
   #include <RingBuffer.h>
 
@@ -36,25 +36,25 @@ returns true if the buffer is full.
 
 returns true if there is any data in the buffer.
 
-  bool addByte(byte b);
+  bool addByte(uint8_t b);
 
 attempts to add one byte to the buffer. If the buffer is full, the
 byte is not added and this method returns false; it returns true if
 the byte is successfully added to the ring buffer.
 
-  bool addBytes(byte *b, int count);
+  bool addBytes(uint8_t *b, int count);
 
 attempts to add 'count' bytes to the buffer. If the buffer fills, 
 processing stops and this method returns false. It returns true 
 only if all of the bytes are successfully added to the ring buffer.
 
-  byte consumeByte();
+  uint8_t consumeByte();
 
 returns one byte at the head of the buffer, and removes it from the
 buffer. (Returns 0 if there are no bytes in the buffer; check
 hasData() first.)
 
-  byte peek(int idx);
+  uint8_t peek(int idx);
 
 Returns the byte at index <idx> of the buffer, if there is one. Note
 that this does not test whether or not there are enough bytes in the
