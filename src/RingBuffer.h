@@ -17,11 +17,11 @@ class RingBuffer {
   bool replaceByte(uint8_t b);
   uint8_t consumeByte();
   uint8_t peek(int16_t idx);
+  uint16_t getPeekCursor();
   void setPeekCursor(int16_t idx);
   void resetPeekCursor();
   uint8_t peekNext();
   int16_t count();
-  uint16_t Cursor();
 
  private:
   uint8_t *buffer;

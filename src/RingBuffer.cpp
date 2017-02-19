@@ -87,7 +87,7 @@ int16_t RingBuffer::count()
   return this->fill;
 }
 
-uint16_t RingBuffer::Cursor()
+uint16_t RingBuffer::getPeekCursor()
 {
   return this->cursor;
 }
