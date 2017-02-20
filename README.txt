@@ -64,3 +64,22 @@ sure to check count() first.
   int count();
 
 Returns the number of bytes currently in the buffer.
+
+There are also some methods that use an internal cursor for inspection
+of the buffer as a ring. These maintain the cursor:
+
+  void resetPeekCursor();
+  uint16_t getPeekCursor();
+  void setPeekCursor(int16_t idx);
+
+and these interact with the data at that cursor:
+
+  uint8_t peekNext();
+
+returns the byte at the cursor and increments the cursor.
+
+  bool replaceByte(uint8_t b);
+
+replaces the byte at the cursor and moves to the next byte in the
+buffer. Does not extend the size of the buffer; wraps around to the
+start if you go past the end.
